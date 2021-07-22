@@ -1938,7 +1938,8 @@ function listenIngTag(){
 
             createTag(li.innerHTML);
             completeSearch();
-
+            //findRecipeByTag(tags);
+            //findRecipeByInput();
         })
         
         
@@ -1960,7 +1961,8 @@ function listenAppTag(){
     
             createTag(li.innerHTML);
             completeSearch();
-            
+            //findRecipeByTag(tags);
+            //findRecipeByInput();
         })
     })
 }
@@ -1978,7 +1980,8 @@ function listenUstTag(){
     
             createTag(li.innerHTML);
             completeSearch();
-            
+            //findRecipeByTag(tags);
+           //findRecipeByInput();
         })
         
     })
@@ -2035,14 +2038,14 @@ tags.forEach(
           iconElt.addEventListener('click', function () {
             tags.splice(index, 1);
 
-            //createTag();
+            createTag();
            
             //completeSearch();
 
             //createRecipesCart(recipes);
             //listenIngtag(); 
             //completeSearch();
-            //findRecipeByTag();
+            findRecipeByTag(tags);
             //allIngTags.forEach((ing) => (ing.style.display = "block"));
       })
 })
@@ -2182,62 +2185,89 @@ function createRecipesCart(array){
 
 // Search logic:
 
-// fonction qui appelle une fonction qui vérifie l'input et les tags
+// recherche des recettes dans : le titre, la liste d'ingrédients et description:
 
-let results = [];
-    
-function findRecipe(array){
+let arrayOfRecipesFilteredByText = [];
+let arrayOfRecipesFilteredByTag = [];
 
+let recipesByAppliance, recipesByIngredients, recipesByUstensils = [];
+
+function findRecipeByInput(){
     const input = document.getElementById('search-bar');
-    const searchValue = input.value;
-    
-    let resultRecipes = [];
+    const searchValue = input.value.toLowerCase();
 
-    array.forEach((r) => {
-        if (findRecipeByInput(r, searchValue) && findRecipeByTag(r))
-        {
-            resultRecipes.push(r);
+
+    if (searchValue.length >= 3){
+
+        //Opérateur conditionnel : 
+
+        if (arrayOfRecipesFilteredByText = arrayOfRecipesFilteredByTag && arrayOfRecipesFilteredByTag.size > 0){
+            arrayOfRecipesFilteredByText = [...arrayOfRecipesFilteredByTag]
+        }else{
+            arrayOfRecipesFilteredByText = recipes;
         }
+        
+        //Search recipe by ingredients or name or description
+        recipesByIngredients = arrayOfRecipesFilteredByText.filter( r => {
+            return r.ingredients.filter(i => i.ingredient.toLowerCase().includes(searchValue)).length > 0 
+            || r.name.toLowerCase().includes(searchValue)
+            || r.description.toLowerCase().indexOf(searchValue) >= 0;
+        });
+        
+        //Search recipe by appliance 
+        recipesByAppliance = arrayOfRecipesFilteredByText.filter(r => r.appliance.toLowerCase().includes(searchValue));
+        
+        //Search recipe by ustensils
+        recipesByUstensils = arrayOfRecipesFilteredByText.filter(r => r.ustensils.filter(ust => ust.toLowerCase().includes(searchValue)).length > 0);
+        
+        arrayOfRecipesFilteredByText = recipesByAppliance.concat(recipesByIngredients,recipesByUstensils);
+
+        console.log(arrayOfRecipesFilteredByText);
+
+        createRecipesCart(arrayOfRecipesFilteredByText);
+        
+    }
+
+    results = arrayOfRecipesFilteredByText;
+
+}
+
+
+function findRecipeByTag(tags){
+
+    if(tags.length > 0){
+
+        if (arrayOfRecipesFilteredByTag = arrayOfRecipesFilteredByText && arrayOfRecipesFilteredByText.size > 0){
+            arrayOfRecipesFilteredByTag = [...arrayOfRecipesFilteredByText]
+        }else{
+            arrayOfRecipesFilteredByTag = recipes;
+        }
+
+        tags.forEach((t) => {
+
+        //Filter list of recipes by appliance
+        recipesByAppliance = arrayOfRecipesFilteredByTag.filter(app => app.appliance.toLowerCase().includes(t.value));
+        
+        //Filter list of recipes by ingredients
+        recipesByIngredients = arrayOfRecipesFilteredByTag.filter(ing => ing.ingredients.map(i => i.ingredient.toLowerCase()).includes(t.value));
+        
+        //Filter list of recipes by ustensils
+        recipesByUstensils = arrayOfRecipesFilteredByTag.filter(ust => ust.ustensils.map(u => u.toLowerCase()).includes(t.value));
+        
+        arrayOfRecipesFilteredByTag = recipesByAppliance.concat(recipesByIngredients,recipesByUstensils)
+        
+        console.log(arrayOfRecipesFilteredByTag);
+
+        createRecipesCart(arrayOfRecipesFilteredByTag);
     })
-
-    createRecipesCart(resultRecipes);
-
-    //listenIngtag();
-
-    results = resultRecipes
     
-}
+    }
 
-
-function findRecipeByInput(r, searchValue){ 
-
-    return searchValue < 3 || (r.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(searchValue.toLowerCase())
-    || r.description.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(searchValue.toLowerCase())
-    || (r.ingredients.forEach((ing) => (ing.ingredient.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(searchValue.toLowerCase())))));
+    results = arrayOfRecipesFilteredByTag;
 
 }
 
-
-function findRecipeByTag(recipe){
-
-    const ingredients = recipe.ingredients.map(i => i.ingredient.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
-    //console.log(ingredients)
-    let res = true;
-    tags.forEach(t => {
-        console.log(t.value.toLowerCase())
-        if(t.type === 'ing' && !ingredients.includes(t.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''))) {
-            res = false
-        }
-        if(t.type === 'ust' && !recipe.ustensils.includes(t.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''))) {
-            res = false
-        }
-        if(t.type === 'app' && recipe.appliance.toLowerCase() !== t.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')) {
-            res = false
-        }
-    })
-    return res;
-
-}
+    
 
 
 // show the ingredients (in the ing filter) included in the displayed recipes:
@@ -2335,11 +2365,12 @@ function checkSearchResults(){
 
 
 function completeSearch(){
-    findRecipe(recipes);
+    findRecipeByInput();
+    findRecipeByTag(tags);
+    //findRecipe(recipes);
     displayFiltersFromRecipes();
     checkSearchResults(); 
-    //listenIngtag();
-    //createTag();
+
 }
 
 
