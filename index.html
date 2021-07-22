@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les petits Plats</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://kit.fontawesome.com/5339213886.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="header-logo">
+            <img src="./logo (1).png" alt="logo">
+        </div>
+
+
+        <form class="search_bar">
+            <input type="text" id="search-bar"
+                placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette"
+                onkeyup="completeSearch()">
+            <button type="submit" title="rechercher" class="search-btn" onclick="completeSearch()">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+
+        <div class="tags" id="tags">
+            <!--<div class="ingTags" id="ingTags"></div>
+            <div class="appTags" id="appTags"></div>
+            <div class="ustTags" id="ustTags"></div>-->
+        </div>
+
+
+        <form method="POST" action="index.html" class="search_barFilters">
+            <div class="filters-search">
+                <div class="filters-search--ingfilter">
+                    <input type="text" id="ingredient" placeholder="Ingrédients" class="search_barFilters--ing input"
+                        onkeyup="filterIngDropdown()">
+                    <i class="fas fa-chevron-down search_barFilters--ing--arrow1" id="flecheIng" onclick="ingToggleDropdown()"></i>
+                </div>
+                <div class="ing--allFilters">
+                    <ul id="inglist"></ul>
+                </div>
+            </div>
+
+            <div class="filters-search">
+                <div class="filters-search--appfilter">
+                    <input type="text" id="appareil" placeholder="Appareil" class="search_barFilters--app input"
+                        onkeyup="filterAppDropdown()">
+                    <i class="fas fa-chevron-down search_barFilters--app--arrow2" id="flecheApp" onclick="appToggleDropdown()"></i>
+                </div>
+                <div class="app--allFilters">
+                    <ul id="applist"></ul>
+                </div>
+            </div>
+
+            <div class="filters-search">
+                <div class="filters-search--ustfilter">
+                    <input type="text" id="ustensiles" placeholder="Ustensiles" class="search_barFilters--ust input"
+                        onkeyup="filterUstDropdown()">
+                    <i class="fas fa-chevron-down search_barFilters--ust--arrow3" id="flecheUst" onclick="ustToggleDropdown()"></i>
+                </div>
+                <div class="ust--allFilters">
+                    <ul id="ustlist"></ul>
+                </div>
+            </div>
+        </form>
+
+
+    </header>
+    <main>
+        <div id="resultCarts"> </div>
+
+        
+    </main>
+
+    <p id="resultNotFound"></p>
+
+
+    <script src="./src/data.js"></script>
+</body>
+
+</html>
