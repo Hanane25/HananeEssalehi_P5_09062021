@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les petits Plats</title>
+    <title>Les petits Plats - version2</title>
 
     <link rel="stylesheet" href="css/style.css" />
     <script src="https://kit.fontawesome.com/5339213886.js" crossorigin="anonymous"></script>
@@ -41,8 +41,7 @@
                         onkeyup="filterIngDropdown()">
                     <i class="fas fa-chevron-down search_barFilters--ing--arrow1" id="flecheIng" onclick="ingToggleDropdown()"></i>
                 </div>
-                <div class="ing--allFilters">
-                    <ul id="inglist"></ul>
+                <div class="ing--allFilters" id="inglist">
                 </div>
             </div>
 
@@ -52,8 +51,7 @@
                         onkeyup="filterAppDropdown()">
                     <i class="fas fa-chevron-down search_barFilters--app--arrow2" id="flecheApp" onclick="appToggleDropdown()"></i>
                 </div>
-                <div class="app--allFilters">
-                    <ul id="applist"></ul>
+                <div class="app--allFilters" id="applist">
                 </div>
             </div>
 
@@ -63,8 +61,7 @@
                         onkeyup="filterUstDropdown()">
                     <i class="fas fa-chevron-down search_barFilters--ust--arrow3" id="flecheUst" onclick="ustToggleDropdown()"></i>
                 </div>
-                <div class="ust--allFilters">
-                    <ul id="ustlist"></ul>
+                <div class="ust--allFilters" id="ustlist">
                 </div>
             </div>
         </form>
@@ -73,11 +70,9 @@
     </header>
     <main>
         <div id="resultCarts"> </div>
-
-        
     </main>
 
-    <p id="resultNotFound"></p>
+    <p id="resultNotFound">Aucune recette ne correspond à votre critère…</p>
 
 
     <script src="./src/data.js"></script>
