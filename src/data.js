@@ -1728,32 +1728,49 @@ const recipes = [
 ]
 
 
-    const arrayOfIngredients = [];
-    const arrayOfAppliance =[];
-    const arrayOfUstensils = [];
+/**
+ * DOM VARIABLES
+ */
+ const ingredientList = document.querySelector('#inglist');
+ const applianceList = document.querySelector('#applist');
+ const ustensilesList = document.querySelector('#ustlist');
+ const ingDropdown = document.getElementsByClassName('ing--allFilters');
+ const appDropdown = document.getElementsByClassName('app--allFilters');
+ const ustDropdown = document.getElementsByClassName('ust--allFilters');
+
+
+
+const arrayOfIngredients = [];
+const arrayOfAppliance =[];
+const arrayOfUstensils = [];
     
-    //init array of each type: ing, app and ust
-
-    function getAllRecipes(){
-        for (let i = 0; i < recipes.length; i++) {
-            arrayOfIngredients.push(...recipes[i].ingredients.map(ing => ing.ingredient.toLowerCase()));
-            arrayOfAppliance.push(recipes[i].appliance.toLowerCase());
-            arrayOfUstensils.push(...recipes[i].ustensils.map(i => i.toLowerCase()));
-        }
+/**
+ * init array of each type: ing, app and ust
+ */
+function getAllRecipes(){
+    for (let i = 0; i < recipes.length; i++) {
+        arrayOfIngredients.push(...recipes[i].ingredients.map(ing => ing.ingredient.toLowerCase()));
+        arrayOfAppliance.push(recipes[i].appliance.toLowerCase());
+        arrayOfUstensils.push(...recipes[i].ustensils.map(i => i.toLowerCase()));
     }
-    getAllRecipes()
+}
+getAllRecipes();
 
 
-    //Pour supprimer les doublons
-    let tabIngSansDoublons = Array.from(new Set(arrayOfIngredients));
-    let tabAppSansDoublons = Array.from(new Set(arrayOfAppliance));
-    let tabUstSansDoublons = Array.from(new Set(arrayOfUstensils));
+/**
+ * Remove duplicates from array of each type
+ */
+let tabIngSansDoublons = Array.from(new Set(arrayOfIngredients));
+let tabAppSansDoublons = Array.from(new Set(arrayOfAppliance));
+let tabUstSansDoublons = Array.from(new Set(arrayOfUstensils));
 
 
+/**
+ * Get a list of ingredients and push to tags array
+ * @param {*} array 
+ */
 function showIngredients(array){
  
-    let ingredientList = document.querySelector('#inglist');
-
     ingredientList.innerHTML = " ";
 
     //on utilise une boucle for pour parcourir chaque object du tableau ingredients
@@ -1780,9 +1797,12 @@ function showIngredients(array){
         
 }
 
-function showAppliance(array){
 
-    let applianceList = document.querySelector('#applist');
+/**
+ * Get a list of appliance and push to tags array
+ * @param {*} array 
+ */
+function showAppliance(array){
 
     applianceList.innerHTML = " ";
     
@@ -1808,9 +1828,12 @@ function showAppliance(array){
     }  
 }
 
-function showUstensils(array){
 
-    let ustensilesList = document.querySelector('#ustlist');
+/**
+ * Get a list of ustensils and push to tags array
+ * @param {*} array 
+ */
+function showUstensils(array){
 
     ustensilesList.innerHTML = "";
 
@@ -1836,8 +1859,7 @@ function showUstensils(array){
 }
 
 
-// add event listener quand je clique sur les filtres
-
+//ouvrir les menus onclick (ing, app ou ust)
 
 const openIngFilter = document.getElementById("flecheIng");
 openIngFilter.addEventListener('click', showIngredients(tabIngSansDoublons));
@@ -1849,12 +1871,10 @@ const openUstFilter = document.getElementById("flecheUst");
 openUstFilter.addEventListener('click', showUstensils(tabUstSansDoublons));
 
 
-const ingDropdown = document.getElementsByClassName('ing--allFilters');
-const appDropdown = document.getElementsByClassName('app--allFilters');
-const ustDropdown = document.getElementsByClassName('ust--allFilters');
-
-
-
+/**
+ * open ingredients dropdown and display the initial list of ingredients.
+ *   
+ */
 function ingToggleDropdown(){
 
     if (ingDropdown[0].style.display === 'none'){
@@ -1868,7 +1888,10 @@ function ingToggleDropdown(){
 
 }
 
-
+/**
+ * open appliance dropdown and display the initial list of appliance.
+ * 
+ */
 function appToggleDropdown(){
     
     if (appDropdown[0].style.display === 'none'){
@@ -1880,7 +1903,10 @@ function appToggleDropdown(){
     }
 }
 
-
+/**
+ * open ustensils dropdown and display the initial list of ustensils.
+ * 
+ */
 function ustToggleDropdown(){
     
     if (ustDropdown[0].style.display === 'none'){
@@ -1892,7 +1918,9 @@ function ustToggleDropdown(){
     }
 }
 
-
+/**
+ * manage ingredients input value 
+ */
 function filterIngDropdown(){
     let Input = document.getElementById('ingredient');
     let filter = Input.value.toUpperCase();
@@ -1909,6 +1937,9 @@ function filterIngDropdown(){
     }
 }
 
+/**
+ * manage appliance input value 
+ */
 function filterAppDropdown(){
     let Input = document.getElementById('appareil');
     let filter = Input.value.toUpperCase();
@@ -1925,6 +1956,9 @@ function filterAppDropdown(){
     }
 }
 
+/**
+ * manage ustensils input value 
+ */
 function filterUstDropdown(){
     let Input = document.getElementById('ustensiles');
     let filter = Input.value.toUpperCase();
@@ -1943,10 +1977,12 @@ function filterUstDropdown(){
 
 
 
-
 const tags = [];
-//console.log(tags);
 
+
+/**
+ * create tag element and remove tag onclick
+ */
 function createTag(){
 
 const tag = document.getElementById('tags');
@@ -2002,17 +2038,10 @@ tags.forEach(
 
 // fonction ou on crée la carte de recette à afficher comme résultat
 
-let ingredientsArray = [];
-let quantityArray = []; 
-let unitArray = [];
-
-for (let i = 0; i < recipes.length; i++) {
-    ingredientsArray.push(recipes[i].ingredients.map(ing => ing.ingredient));
-    quantityArray.push(recipes[i].ingredients.map(qua => qua.quantity));
-    unitArray.push(recipes[i].ingredients.map(unt => unt.unit));
-}
-
-
+/**
+ * create recipe cart 
+ * @param {*} array list of recipes to create
+ */
 function createRecipesCart(array){
 
     const divPrincipal = document.getElementById('resultCarts');
@@ -2087,7 +2116,8 @@ function createRecipesCart(array){
 
 }
 
-
+//create and display all recipes carts
+createRecipesCart(recipes);
 
 // Search logic:
 
@@ -2098,10 +2128,12 @@ let arrayOfRecipesFilteredByTag = [];
 
 let recipesByAppliance, recipesByIngredients, recipesByUstensils = [];
 
+/**
+ * Search recipes from search input
+ */
 function findRecipeByInput(){
     const input = document.getElementById('search-bar');
     const searchValue = input.value.toLowerCase();
-
 
     if (searchValue.length >= 3){
 
@@ -2117,20 +2149,13 @@ function findRecipeByInput(){
             || r.name.toLowerCase().includes(searchValue)
             || r.description.toLowerCase().indexOf(searchValue) >= 0;
         });
-        
-        //Search recipe by appliance 
-        recipesByAppliance = arrayOfRecipesFilteredByText.filter(r => r.appliance.toLowerCase().includes(searchValue));
-        
-        //Search recipe by ustensils
-        recipesByUstensils = arrayOfRecipesFilteredByText.filter(r => r.ustensils.filter(ust => ust.toLowerCase().includes(searchValue)).length > 0);
-        
-        arrayOfRecipesFilteredByText = recipesByAppliance.concat(recipesByIngredients,recipesByUstensils);
+
+        arrayOfRecipesFilteredByText = recipesByIngredients;
 
         console.log(arrayOfRecipesFilteredByText);
 
         createRecipesCart(arrayOfRecipesFilteredByText);
-        
-        
+      
     }
     else if (searchValue.length < 3 && tags.length === 0){
         createRecipesCart(recipes);
@@ -2142,7 +2167,10 @@ function findRecipeByInput(){
 
 }
 
-
+/**
+ * Search recipes from tags
+ * @param {*} tags 
+ */
 function findRecipeByTag(tags){
 
     if(tags.length > 0){
@@ -2170,19 +2198,19 @@ function findRecipeByTag(tags){
 
         createRecipesCart(arrayOfRecipesFilteredByTag);
     })
-    
+
     }
 
     results = arrayOfRecipesFilteredByTag;
 
-
 }
-
-    
 
 
 // show the ingredients (in the ing filter) included in the displayed recipes:
 
+/**
+ * Display ingredients from the displayed recipes in ing menu
+ */
 function displayIngFromRecipes(){
 
     let ingSet = [];
@@ -2208,6 +2236,9 @@ function displayIngFromRecipes(){
 
 }
 
+/**
+ * Display appliance from the displayed recipes in app menu
+ */
 function displayAppFromRecipes(){
 
         let appSet = [];
@@ -2232,6 +2263,10 @@ function displayAppFromRecipes(){
         showAppliance(tabAppSansDoublons);
 }
 
+
+/**
+ * Display ustensils from the displayed recipes in ust menu
+ */
 function displayUstFromRecipes(){
     let ustSet = [];
 
@@ -2257,6 +2292,9 @@ function displayUstFromRecipes(){
     
 }
 
+/**
+ * Display all filters included in the displayed recipes
+ */
 function displayFiltersFromRecipes(){
     displayIngFromRecipes();
     displayAppFromRecipes();
@@ -2264,6 +2302,9 @@ function displayFiltersFromRecipes(){
 }
 
 
+/**
+ * Display "no result" when no recipe found
+ */
 function checkSearchResults(){
     const contentNotFound = document.getElementById("resultNotFound");
 
@@ -2286,7 +2327,9 @@ function checkSearchResults(){
 
 }
 
-
+/**
+ * All search steps
+ */
 function completeSearch(){
     findRecipeByInput();
     findRecipeByTag(tags);
