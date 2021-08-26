@@ -1757,9 +1757,8 @@ function getAllRecipes(){
 getAllRecipes();
 
 
-/**
- * Remove duplicates from array of each type
- */
+//Remove duplicates from array of each type
+ 
 let tabIngSansDoublons = Array.from(new Set(arrayOfIngredients));
 let tabAppSansDoublons = Array.from(new Set(arrayOfAppliance));
 let tabUstSansDoublons = Array.from(new Set(arrayOfUstensils));
