@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les petits Plats - version2</title>
+    <title>Les petits Plats - version1</title>
 
     <link rel="stylesheet" href="css/style.css" />
     <script src="https://kit.fontawesome.com/5339213886.js" crossorigin="anonymous"></script>
@@ -20,9 +20,8 @@
 
         <form class="search_bar">
             <input type="text" id="search-bar"
-                placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette"
-                onkeyup="completeSearch()">
-            <button type="submit" title="rechercher" class="search-btn">
+                placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette" onkeyup="completeSearch()">
+            <button type="submit" title="rechercher" class="search-btn" onclick="completeSearch()">
                 <i class="fas fa-search"></i>
             </button>
         </form>
@@ -37,9 +36,10 @@
         <form method="POST" action="index.html" class="search_barFilters">
             <div class="filters-search">
                 <div class="filters-search--ingfilter">
-                    <input type="text" id="ingredient" placeholder="Ingrédients" class="search_barFilters--ing input"
+                    <input type="search" id="ingredient" placeholder="Ingrédients" class="search_barFilters--ing input"
                         onkeyup="filterIngDropdown()">
-                    <i class="fas fa-chevron-down search_barFilters--ing--arrow1" id="flecheIng" onclick="ingToggleDropdown()"></i>
+                    <i class="fas fa-chevron-down search_barFilters--ing--arrow1" id="flecheIng"
+                        onclick="ingToggleDropdown()"></i>
                 </div>
                 <div class="ing--allFilters" id="inglist">
                 </div>
@@ -49,7 +49,8 @@
                 <div class="filters-search--appfilter">
                     <input type="text" id="appareil" placeholder="Appareil" class="search_barFilters--app input"
                         onkeyup="filterAppDropdown()">
-                    <i class="fas fa-chevron-down search_barFilters--app--arrow2" id="flecheApp" onclick="appToggleDropdown()"></i>
+                    <i class="fas fa-chevron-down search_barFilters--app--arrow2" id="flecheApp"
+                        onclick="appToggleDropdown()"></i>
                 </div>
                 <div class="app--allFilters" id="applist">
                 </div>
@@ -59,7 +60,8 @@
                 <div class="filters-search--ustfilter">
                     <input type="text" id="ustensiles" placeholder="Ustensiles" class="search_barFilters--ust input"
                         onkeyup="filterUstDropdown()">
-                    <i class="fas fa-chevron-down search_barFilters--ust--arrow3" id="flecheUst" onclick="ustToggleDropdown()"></i>
+                    <i class="fas fa-chevron-down search_barFilters--ust--arrow3" id="flecheUst"
+                        onclick="ustToggleDropdown()"></i>
                 </div>
                 <div class="ust--allFilters" id="ustlist">
                 </div>
