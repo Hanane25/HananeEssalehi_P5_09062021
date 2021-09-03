@@ -1999,8 +1999,8 @@ tags.forEach(
        tag.appendChild(div);
        div.appendChild(elt);
        div.appendChild(iconElt);
-       elt.textContent = t.value;
 
+       elt.textContent = t.value;
 
        if(t.type === 'ing') {
 
@@ -2022,12 +2022,12 @@ tags.forEach(
            
          }
 
-         iconElt.addEventListener('click', function () {
-           tags.splice(index, 1);
+        iconElt.addEventListener('click', function () {
+        tags.splice(index, 1);
 
-           createTag();
+        createTag();
           
-           completeSearch();
+        completeSearch();
 
      })
 })
